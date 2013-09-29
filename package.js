@@ -7,6 +7,8 @@ Package._transitional_registerBuildPlugin({
   use: ["handlebars"],
   sources: [
     "plugin/html_scanner.js",
+    "plugin/StringScanner.js",
     "plugin/compile-jade.js"
-  ]
+  ],
+  npmDependencies: {"jade": "0.35.0"}
 });

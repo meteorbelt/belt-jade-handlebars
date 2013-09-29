@@ -1,7 +1,8 @@
 var fs = Npm.require('fs');
 var path = Npm.require('path');
-var jade = Npm.require(path.join(process.env.PACKAGE_DIRS, 'jade-handlebars', 'plugin', 'jade'));
-var StringScanner = Npm.require(path.join(process.env.PACKAGE_DIRS, 'jade-handlebars', 'plugin', "StringScanner"));
+var jade = Npm.require('jade');
+// var jade = Npm.require(path.join(process.env.PACKAGE_DIRS, 'jade-handlebars', 'plugin', 'jade'));
+// var StringScanner = Npm.require(path.join(process.env.PACKAGE_DIRS, 'jade-handlebars', 'plugin', "StringScanner"));
 
 function jsonParser(json) {
   // Number fo indentation
