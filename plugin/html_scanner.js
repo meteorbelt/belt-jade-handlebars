@@ -19,19 +19,15 @@ html_scanner = {
       index += amount;
     };
 
-    var throwParseError = function (msg, atIndex, lineOffset) {
-      atIndex = atIndex || index;
-      lineOffset = lineOffset || 0;
-
+    var throwParseError = function (msg) {
       var ret = new html_scanner.ParseError;
       ret.message = msg || "bad formatting in HTML template";
       ret.file = source_name;
-      ret.line = contents.substring(0, atIndex).split('\n').length + lineOffset;
+      ret.line = contents.substring(0, index).split('\n').length;
       throw ret;
     };
 
     var results = html_scanner._initResults();
-
     var rOpenTag = /^((<(template|head|body)\b)|(<!--)|(<!DOCTYPE|{{!)|$)/i;
 
     while (rest) {
@@ -146,39 +142,33 @@ html_scanner = {
 
 
     // <body> or <template>
-    try {
-      var ast = Handlebars.to_json_ast(contents);
-    } catch (e) {
-      if (e instanceof Handlebars.ParseError) {
-        if (typeof(e.line) === "number")
-          // subtract one from e.line because it is one-based but we
-          // need it to be an offset from contentsStartIndex
-          throwParseError(e.message, contentsStartIndex, e.line - 1);
-        else
-          // No line number available from Handlebars parser, so
-          // generate the parse error at the <template> tag itself
-          throwParseError("error in template: " + e.message, tagStartIndex);
-      }
-      else
-        throw e;
-    }
-    var code = 'Package.handlebars.Handlebars.json_ast_to_func(' +
-          JSON.stringify(ast) + ')';
 
     if (tag === "template") {
       var name = attribs.name;
       if (! name)
         throwParseError("Template has no 'name' attribute");
 
-      results.js += "Template.__define__(" + JSON.stringify(name) + ","
-        + code + ");\n";
+      var renderFuncCode = Spacebars.compile(
+        contents, {
+          sourceName: 'Template "' + name + '"',
+          // XXX MESSY HACK - make only Templates expose
+          // `content` and `elseContent`
+          preamble: '\n  var _local_content = this.content = this.__content;\n  var _local_elseContent = this.elseContent = this.__elseContent' });
+
+      results.js += "\nTemplate[" + JSON.stringify(name) +
+        "] = UI.Component.extend({kind: " +
+        JSON.stringify("Template_" + name) + ", render: " +
+        renderFuncCode + "});\n";
     } else {
       // <body>
       if (hasAttribs)
         throwParseError("Attributes on <body> not supported");
-      results.js += "Meteor.startup(function(){" +
-        "document.body.appendChild(Spark.render(" +
-        "Template.__define__(null," + code + ")));});";
+
+      var renderFuncCode = Spacebars.compile(
+        contents, { sourceName: "<body>" });
+
+      // We may be one of many `<body>` tags.
+      results.js += "\nUI.body.contentParts.push(UI.Component.extend({render: " + renderFuncCode + "}));\nMeteor.startup(function () { if (! UI.body.INSTANCE) { UI.body.INSTANCE = UI.render(UI.body); UI.insert(UI.body.INSTANCE, document.body); } });\n";
     }
   }
 };

@@ -1,8 +1,8 @@
 {
   "name": "belt-jade-handlebars",
-  "description": "Write the templates in your Meteor Application using Handlebars and Jade instead of HTML and Handlebars - MeteorBelt fork",
+  "description": "Write the templates in your Meteor Application using Handlebars and Jade instead of HTML and Handlebars -- Meteor UI compatible",
   "homepage": "https://github.com/meteorbelt/belt-jade-handlebars",
   "author": "Kyle Finley <kyle@meteorbelt.com>",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "git": "https://github.com/meteorbelt/belt-jade-handlebars.git"
 }

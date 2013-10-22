@@ -1,5 +1,19 @@
 # Jade-handlebars for Meteor
 
+### **NOTE: THIS VERSION IS NOT COMPATABLE WITH THE OLD TEMPLATE API (SPARK)**
+
+If you are using the old templete library please use version `0.1.0` by adding:
+
+`smart.json`
+
+```json
+
+    "belt-jade-template": {
+      "git": "https://github.com/meteorbelt/belt-jade-template.git",
+      "tag": "v0.1.0"
+    },
+```
+
 Write the templates in your [Meteor](https://github.com/meteor/meteor) Application using [Handlebars](http://github.com/wycats/handlebars.js) and [Jade](https://github.com/visionmedia/jade) instead of HTML and Handlebars.
 
 ## Why?
@@ -37,7 +51,7 @@ You may write (demo.jade):
       {{greeting}}
       input(type="button", value="Click")
 
-See more details with the [todos example](https://github.com/SimonDegraeve/meteor-jade-handlebars/blob/master/examples/todos/client/todos.jade).
+See more details with the [todos example](https://github.com/meteorbelt/meteor-jade-handlebars/blob/master/examples/todos/client/todos.jade).
 
 ## Installation
 
@@ -47,7 +61,7 @@ To install Jade-handlebars using [Atmosphere](https://atmosphere.meteor.com), si
 
 Navigate to your Meteor project directory and add the package.
 
-    $ mrt add jade-handlebars
+    $ mrt add belt-jade-handlebars
 
 Then, don't forget to run your project using `mrt` instead of `meteor`.
 
