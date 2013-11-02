@@ -8,8 +8,8 @@ If you are using the old templete library please use version `0.1.0` by adding:
 
 ```json
 
-    "belt-jade-template": {
-      "git": "https://github.com/meteorbelt/belt-jade-template.git",
+    "belt-jade-handlebars": {
+      "git": "https://github.com/meteorbelt/belt-jade-handlebars",
       "tag": "v0.1.0"
     },
 ```
