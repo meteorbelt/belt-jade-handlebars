@@ -13,6 +13,9 @@ If you are using the old templete library please use version `0.1.0` by adding:
       "tag": "v0.1.0"
     },
 ```
+If your `.jade` files are not rendering after installation, check your `.meteor/packages` file to confirm that `belt-jade-handlebars` has been added. In some situations meteorite does not appended it.
+
+---
 
 Write the templates in your [Meteor](https://github.com/meteor/meteor) Application using [Handlebars](http://github.com/wycats/handlebars.js) and [Jade](https://github.com/visionmedia/jade) instead of HTML and Handlebars.
 
